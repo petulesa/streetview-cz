@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>Praha – Google Street View 2024–2026</title>
+</head>
+<body>
+<div style="font-family:Arial;text-align:center;padding:30px">
+Načítám mapu Prahy…
+</div>
+
+<script>
+Promise.all([
+    fetch("praha_cast1.txt").then(r => r.text()),
+    fetch("praha_cast2.txt").then(r => r.text())
+])
+.then(parts => {
+    const html = parts[0] + parts[1];
+
+    document.open();
+    document.write(html);
+    document.close();
+})
+.catch(error => {
+    document.body.innerHTML =
+        "<h2>Nepodařilo se načíst mapu.</h2>" +
+        "<p>" + error + "</p>";
+});
+</script>
+
+</body>
+</html>
