@@ -14,38 +14,54 @@ way["highway"]["highway"!~"footway|path|cycleway|pedestrian|steps|track|bridlewa
 out geom;'''
 
 servers = [
-    "https://overpass.kumi.systems/api/interpreter",
     "https://overpass.private.coffee/api/interpreter",
-    "https://overpass-api.de/api/interpreter"
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter"
 ]
 
 headers = {
-    "User-Agent": "Klanovice-StreetView/1.0"
+    "User-Agent": "streetview-cz/1.0 (Google Street View freshness map; OpenStreetMap data)",
+    "Referer": "https://petulesa.github.io/streetview-cz/",
+    "Accept": "application/json",
 }
 
 data = None
 last_error = None
 
 for server in servers:
-    try:
-        print("   Zkouším:", server)
+    for attempt in range(2):
+        try:
+            print(f"   Zkouším: {server} (pokus {attempt + 1}/2)")
 
-        rr = requests.get(
-            server,
-            params={"data": query},
-            headers=headers,
-            timeout=120
-        )
+            rr = requests.post(
+                server,
+                data={"data": query},
+                headers=headers,
+                timeout=360
+            )
 
-        rr.raise_for_status()
-        data = rr.json()
+            rr.raise_for_status()
+            data = rr.json()
 
-        print("   OK")
+            print("   OK")
+            break
+
+        except Exception as e:
+            last_error = e
+            print("   Server neodpověděl:", str(e)[:160])
+
+            if attempt == 0:
+                import time
+                time.sleep(3)
+
+    if data is not None:
         break
 
-    except Exception as e:
-        last_error = e
-        print("   Server neodpověděl, zkouším další…")
+if data is None:
+    raise RuntimeError(
+        "OpenStreetMap data se nepodařilo načíst. "
+        f"Poslední chyba: {last_error}"
+    )
 
 if data is None:
     raise RuntimeError(
