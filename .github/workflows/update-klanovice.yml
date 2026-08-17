@@ -31,8 +31,10 @@ jobs:
 
       - name: Uložím novou mapu
         run: |
+         date -u +"%Y-%m-%d %H:%M:%S UTC" > klanovice_last_update.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
           git add klanovice_streetview_2024_2026.html
           git commit -m "Automatická aktualizace Klánovic" || echo "Žádná změna"
           git push
