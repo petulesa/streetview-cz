@@ -304,7 +304,13 @@ m.get_root().html.add_child(
 out = "klanovice_streetview_2024_2026.html"
 
 m.save(out)
+from datetime import datetime
 
+now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+with open("klanovice_last_update.txt", "w", encoding="utf-8") as f:
+    f.write(now)
+
+print("Poslední aktualizace:", now)
 print("4/4 HOTOVO")
 print("Úseky:", len(roads))
 print("Výsledek:", counts)
