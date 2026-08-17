@@ -1,32 +1,145 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<title>Praha – Google Street View 2024–2026</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Praha – Street View 2024–2026</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #17202a;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      font-size: 18px;
+      color: #5b6570;
+      margin-bottom: 35px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.08);
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .card p {
+      line-height: 1.6;
+      color: #5b6570;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 18px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .button:hover {
+      background: #1d4ed8;
+    }
+
+    .green {
+      background: #16a34a;
+    }
+
+    .green:hover {
+      background: #15803d;
+    }
+
+    .footer {
+      margin-top: 40px;
+      color: #7b8490;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
-<div style="font-family:Arial;text-align:center;padding:30px">
-Načítám mapu Prahy…
+
+<div class="container">
+
+  <h1>🗺️ Praha – Street View 2024–2026</h1>
+
+  <p class="intro">
+    Přehled silnic podle roku dostupného Google Street View.
+  </p>
+
+  <div class="cards">
+
+    <div class="card">
+      <h2>🏙️ Celá Praha</h2>
+
+      <p>
+        Mapa Prahy se zobrazením silnic podle nejnovějšího
+        dostupného snímku Street View z let 2024–2026.
+      </p>
+
+      <a class="button"
+         href="praha_cast1.txt">
+        Praha – část 1
+      </a>
+
+      <a class="button"
+         href="praha_cast2.txt">
+        Praha – část 2
+      </a>
+    </div>
+
+
+    <div class="card">
+      <h2>🌳 Klánovice</h2>
+
+      <p>
+        Podrobnější mapa Klánovic, která se automaticky
+        aktualizuje každý den.
+      </p>
+
+      <p>
+        🔄 Aktualizace probíhá automaticky pomocí GitHub Actions.
+      </p>
+
+      <a class="button green"
+         href="klanovice_streetview_2024_2026.html">
+        Otevřít mapu Klánovic →
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Projekt Street View Praha · automatická aktualizace Klánovic
+  </div>
+
 </div>
-
-<script>
-Promise.all([
-    fetch("praha_cast1.txt").then(r => r.text()),
-    fetch("praha_cast2.txt").then(r => r.text())
-])
-.then(parts => {
-    const html = parts[0] + parts[1];
-
-    document.open();
-    document.write(html);
-    document.close();
-})
-.catch(error => {
-    document.body.innerHTML =
-        "<h2>Nepodařilo se načíst mapu.</h2>" +
-        "<p>" + error + "</p>";
-});
-</script>
 
 </body>
 </html>
